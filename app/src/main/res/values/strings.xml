@@ -104,11 +104,13 @@
     <string name="feeds_and_entries">Feeds and Entries</string>
     <string name="subscription_limit_reached">Subscription limit reached.</string>
     <string name="enable_header_images">Enable header images</string>
+    <string name="enable_text_hyphen">Enable splitting words with hyphens</string>
     <string name="go">Go</string>
     <string name="reading">Reading</string>
     <string name="font">Font</string>
     <string name="sans_serif">Sans Serif</string>
     <string name="serif">Serif</string>
+    <string name="mono">Monospace</string>
     <string name="update_all">Update All</string>
     <string name="sync_in_bg">Sync in background</string>
     <string name="sync_in_bg_description">Subscriptions will update daily when app is closed.</string>

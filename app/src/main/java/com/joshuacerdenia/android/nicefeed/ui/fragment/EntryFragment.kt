@@ -51,7 +51,7 @@ class EntryFragment: VisibleFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(EntryViewModel::class.java)
+        viewModel = ViewModelProvider(this)[EntryViewModel::class.java]
         appTheme = AppCompatDelegate.getDefaultNightMode()
         arguments?.getString(ENTRY_ID)?.let { entryId ->
             viewModel.getEntryById(entryId)
@@ -83,7 +83,7 @@ class EntryFragment: VisibleFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.htmlLiveData.observe(viewLifecycleOwner, { html ->
+        viewModel.htmlLiveData.observe(viewLifecycleOwner) { html ->
             if (html != null) {
                 binding.webView.loadData(html, MIME_TYPE, ENCODING)
                 toggleBannerViews(viewModel.isBannerEnabled)
@@ -100,15 +100,14 @@ class EntryFragment: VisibleFragment() {
                 toolbarBinding.toolbar.title = getString(R.string.app_name)
                 Utils.showErrorMessage(binding.root, resources)
             }
-        })
+        }
 
         parentFragmentManager.setFragmentResultListener(
             TextSizeFragment.TEXT_SIZE,
-            viewLifecycleOwner,
-            { key, result ->
-                result.getInt(key).run { viewModel.setTextSize(this) }
-            }
-        )
+            viewLifecycleOwner
+        ) { key, result ->
+            result.getInt(key).run { viewModel.setTextSize(this) }
+        }
 
         toolbarBinding.toolbar.setOnClickListener {
             binding.nestedScrollView.smoothScrollTo(0, 0)

@@ -24,6 +24,7 @@ class EntryViewModel : ViewModel() {
     val textSize get() = FeedPreferences.textSize
     val font get() = FeedPreferences.font
     val isBannerEnabled get() = FeedPreferences.isBannerEnabled
+    val isHyphenEnabled get() = FeedPreferences.isHyphenEnabled
     var isInitialLoading = true
     val entry: Entry? get() = entryLiveData.value
     private var isExcerpt = false // As of now, unused
@@ -53,6 +54,7 @@ class EntryViewModel : ViewModel() {
             .setFontSize(textSize)
             .setFontFamily(font)
             .setShouldIncludeHeader(!isBannerEnabled)
+            .setTextHyphen(!isHyphenEnabled)
             .format(entry.toMinimal())
     }
 

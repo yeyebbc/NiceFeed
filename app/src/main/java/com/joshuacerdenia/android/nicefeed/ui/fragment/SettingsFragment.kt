@@ -36,6 +36,7 @@ class SettingsFragment: VisibleFragment(), AboutFragment.Callback {
     private lateinit var sortFeedsSpinner: Spinner
     private lateinit var sortEntriesSpinner: Spinner
     private lateinit var fontSpinner: Spinner
+    private lateinit var textHyphenSwitch: SwitchCompat
 
     private val fragment = this@SettingsFragment
     private var callbacks: Callbacks? = null
@@ -63,6 +64,7 @@ class SettingsFragment: VisibleFragment(), AboutFragment.Callback {
         sortFeedsSpinner = view.findViewById(R.id.sort_feeds_spinner)
         sortEntriesSpinner = view.findViewById(R.id.sort_entries_spinner)
         fontSpinner = view.findViewById(R.id.font_spinner)
+        textHyphenSwitch = view.findViewById(R.id.text_hyphen_switch)
         setupToolbar()
         setHasOptionsMenu(true)
         return view
@@ -106,7 +108,8 @@ class SettingsFragment: VisibleFragment(), AboutFragment.Callback {
         fontSpinner.apply {
             adapter = arrayOf(
                 getString(R.string.sans_serif),
-                getString(R.string.serif)
+                getString(R.string.serif),
+                getString(R.string.mono)
             ).run { getDefaultAdapter(context, this)}
             setSelection(FeedPreferences.font)
             onItemSelectedListener = getSpinnerListener(ACTION_SAVE_FONT)
@@ -164,6 +167,13 @@ class SettingsFragment: VisibleFragment(), AboutFragment.Callback {
                 } else {
                     NewEntriesWorker.cancel(context)
                 }
+            }
+        }
+
+        textHyphenSwitch.apply {
+            isChecked = FeedPreferences.isHyphenEnabled
+            setOnCheckedChangeListener { _, isOn ->
+                FeedPreferences.isHyphenEnabled = !isOn
             }
         }
     }

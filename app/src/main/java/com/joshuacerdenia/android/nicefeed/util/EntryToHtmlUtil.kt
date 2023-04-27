@@ -1,16 +1,14 @@
 package com.joshuacerdenia.android.nicefeed.util
 
 import android.util.Base64
-import com.joshuacerdenia.android.nicefeed.FONT_SERIF
-import com.joshuacerdenia.android.nicefeed.LINK_COLOR
-import com.joshuacerdenia.android.nicefeed.TEXT_SIZE_LARGE
-import com.joshuacerdenia.android.nicefeed.TEXT_SIZE_LARGER
+import com.joshuacerdenia.android.nicefeed.*
 import com.joshuacerdenia.android.nicefeed.data.model.entry.EntryMinimal
 
 object EntryToHtmlUtil {
     
     private var fontSize = "medium"
     private var fontFamily = "sans-serif"
+    private var textHyphen = "none"
     private var shouldIncludeHeader = false
 
     private var title = ""
@@ -36,12 +34,21 @@ object EntryToHtmlUtil {
     }
 
     fun setFontFamily(fontKey: Int): EntryToHtmlUtil {
-        fontFamily = if (fontKey == FONT_SERIF) "serif" else "sans-serif"
+        fontFamily = when (fontKey) {
+            FONT_SERIF -> "serif"
+            FONT_MONO -> "monospace"
+            else -> "sans-serif"
+        }
         return this
     }
 
     fun setShouldIncludeHeader(shouldIncludeHeader: Boolean): EntryToHtmlUtil {
         this.shouldIncludeHeader = shouldIncludeHeader
+        return this
+    }
+
+    fun setTextHyphen(shouldEnableHyphen: Boolean): EntryToHtmlUtil {
+        this.textHyphen = if (shouldEnableHyphen) "auto" else "none"
         return this
     }
 
@@ -69,7 +76,7 @@ object EntryToHtmlUtil {
     private fun getStyle(): String {
         return """<style>
             * { max-width:100% }
-            body {font-size:$fontSize; font-family:$fontFamily; word-wrap:break-word; line-height:1.4}
+            body {font-size:$fontSize; font-family:$fontFamily; word-wrap:break-word; hyphens:$textHyphen; line-height:1.4}
             h1, h2, h3, h4, h5, h6 {line-height:normal}
             #subtitle {color:gray}
             a:link, a:visited, a:hover, a:active {color:$LINK_COLOR; text-decoration:none; font-weight:bold}

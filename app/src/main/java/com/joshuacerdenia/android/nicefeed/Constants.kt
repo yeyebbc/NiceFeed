@@ -8,6 +8,7 @@ const val TEXT_SIZE_LARGER = 2
 
 const val FONT_SANS_SERIF = 0
 const val FONT_SERIF = 1
+const val FONT_MONO = 2
 
 const val THEME_DEFAULT = 0
 const val THEME_LIGHT = 1

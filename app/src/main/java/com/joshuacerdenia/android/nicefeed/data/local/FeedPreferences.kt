@@ -18,6 +18,7 @@ object FeedPreferences {
     private const val FONT = "font"
     private const val TEXT_SIZE = "text_size"
     private const val IS_BANNER_ENABLED = "is_banner_enabled"
+    private const val IS_HYPHEN_ENABLED = "is_hyphen_enabled"
     private const val SHOULD_AUTO_UPDATE = "should_auto_update"
     private const val SHOULD_POLL = "should_poll"
     private const val LAST_POLLED_INDEX = "last_polled_index"
@@ -76,6 +77,10 @@ object FeedPreferences {
     var isBannerEnabled: Boolean
         get() = prefs.getBoolean(IS_BANNER_ENABLED, true)
         set(value) = prefs.edit { it.putBoolean(IS_BANNER_ENABLED, value) }
+
+    var isHyphenEnabled: Boolean
+        get() = prefs.getBoolean(IS_HYPHEN_ENABLED, true)
+        set(value) = prefs.edit { it.putBoolean(IS_HYPHEN_ENABLED, value) }
 
     var shouldAutoUpdate: Boolean
         get() = prefs.getBoolean(SHOULD_AUTO_UPDATE, true)

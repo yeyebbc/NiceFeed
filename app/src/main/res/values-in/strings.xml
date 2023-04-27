@@ -109,6 +109,7 @@
     <string name="font">Fon</string>
     <string name="sans_serif">Sans Serif</string>
     <string name="serif">Serif</string>
+    <string name="mono">Monospace</string>
     <string name="update_all">Perbarui Semua</string>
     <string name="sync_in_bg">Sinkronkan di latar belakang</string>
     <string name="sync_in_bg_description">Langganan akan diperbarui setiap hari saat aplikasi tidak dibuka.</string>
@@ -145,5 +146,6 @@
         <item quantity="one">1 umpan</item>
         <item quantity="other">%d umpan</item>
     </plurals>
+    <string name="enable_text_hyphen">Mengaktifkan pemisahan kata dengan tanda hubung</string>
 
 </resources>
