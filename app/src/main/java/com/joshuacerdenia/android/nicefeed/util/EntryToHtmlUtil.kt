@@ -61,12 +61,15 @@ object EntryToHtmlUtil {
                 else -> "<p id=\"subtitle\">${entry.formattedDate} – ${entry.author}</p>"
             }
         }
-        
+
         return StringBuilder(getStyle())
             .append("<body>")
             .append(title)
             .append(subtitle)
             .append(entry.content.styleRemoved())
+            /* TO DO
+            * Add "&shy;" to each character
+            * */
             .append("</body>")
             .toString()
             .toByteArray()
@@ -76,7 +79,7 @@ object EntryToHtmlUtil {
     private fun getStyle(): String {
         return """<style>
             * { max-width:100% }
-            body {font-size:$fontSize; font-family:$fontFamily; word-wrap:break-word; hyphens:$textHyphen; line-height:1.4}
+            body {font-size:$fontSize; font-family:$fontFamily; word-wrap: break-word; hyphens:$textHyphen; line-height:1.4}
             h1, h2, h3, h4, h5, h6 {line-height:normal}
             #subtitle {color:gray}
             a:link, a:visited, a:hover, a:active {color:$LINK_COLOR; text-decoration:none; font-weight:bold}
@@ -91,6 +94,15 @@ object EntryToHtmlUtil {
         var string = this
         while (string.contains("<style>")) {
             string = string.substringBefore("<style>") + string.substringAfter("</style>")
+        }
+
+        return string
+    }
+
+    private fun String.shyAdded(): String{
+        var string = this
+        while (string.contains("<p>")) {
+            
         }
 
         return string

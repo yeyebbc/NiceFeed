@@ -53,8 +53,8 @@ class EntryViewModel : ViewModel() {
         _htmlLiveData.value = EntryToHtmlUtil
             .setFontSize(textSize)
             .setFontFamily(font)
+            .setTextHyphen(isHyphenEnabled)
             .setShouldIncludeHeader(!isBannerEnabled)
-            .setTextHyphen(!isHyphenEnabled)
             .format(entry.toMinimal())
     }
 
