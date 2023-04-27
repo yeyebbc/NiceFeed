@@ -99,12 +99,30 @@ object EntryToHtmlUtil {
         return string
     }
 
-    private fun String.shyAdded(): String{
-        var string = this
-        while (string.contains("<p>")) {
-            
-        }
+    private fun shyAdded(inputString: String): String{
+        var onlyParagraph = inputString
+        var onlyParagraphBeingProcessed = StringBuilder("")
+        var onlyParagraphWithShy = ""
 
-        return string
+        // Remove everything except paragraph
+        if (inputString.contains("<p>")) {
+            onlyParagraph = inputString.substringBeforeLast("</p>").substringAfter("<p>")
+            onlyParagraph =  StringBuilder(onlyParagraph).insert(0,"<p>").append("</p>").toString()
+        } else return inputString
+
+        var remainingSentences = onlyParagraph
+
+        do {
+            var addingShy = StringBuilder(remainingSentences.substringAfter("<p>").substringBefore("</p>")).toString()
+            for (i in addingShy) {
+
+            }
+
+
+
+            remainingSentences = remainingSentences.substringAfter("</p>")
+        } while (remainingSentences.substringAfter("</p>") != "")
+
+        return onlyParagraphWithShy
     }
 }
