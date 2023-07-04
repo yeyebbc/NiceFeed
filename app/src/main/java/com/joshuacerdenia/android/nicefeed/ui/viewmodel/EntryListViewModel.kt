@@ -27,9 +27,14 @@ class EntryListViewModel: ViewModel(), UpdateManager.UpdateReceiver {
 
     private val feedIdLiveData = MutableLiveData<String>()
 
-    val feedLiveData: LiveData<String> = MutableLiveData<String>().apply {
-        value = feedIdLiveData.map { feedId: String -> repo.getFeed(feedId) }.value.toString()
+    val feedLiveData: LiveData<Feed?> = MutableLiveData<String>().switchMap { feedId ->
+        repo.getFeed(feedId)
     }
+
+//    Original code
+//    val feedLiveData = Transformations.switchMap(feedIdLiveData) { feedId ->
+//        repo.getFeed(feedId)
+//    }
 
     private val sourceEntriesLiveData: LiveData<List<Entry>> = feedIdLiveData.switchMap { feedId: String ->
         when (feedId) {

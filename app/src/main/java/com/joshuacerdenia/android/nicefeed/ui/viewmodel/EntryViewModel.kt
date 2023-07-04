@@ -12,10 +12,15 @@ class EntryViewModel : ViewModel() {
     private val repo = NiceFeedRepository.get()
 
     private val entryIdLiveData = MutableLiveData<String>()
-    private val entryLiveData = Transformations
-        .switchMap(entryIdLiveData) { entryId ->
+    private val entryLiveData: LiveData<Entry?> = entryIdLiveData.switchMap { entryId ->
             repo.getEntry(entryId)
         }
+
+//    Original code
+//    private val entryLiveData = Transformations
+//        .switchMap(entryIdLiveData) { entryId ->
+//            repo.getEntry(entryId)
+//        }
 
     private val _htmlLiveData = MediatorLiveData<String?>()
     val htmlLiveData: LiveData<String?> get() = _htmlLiveData

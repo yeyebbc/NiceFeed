@@ -129,7 +129,7 @@ open class EntryListFragment : VisibleFragment(),
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.feedLiveData.observe(viewLifecycleOwner) { feed: Feed ->
+        viewModel.feedLiveData.observe(viewLifecycleOwner) { feed ->
             binding.progressBar.hide()
             binding.masterProgressBar.hide()
             viewModel.onFeedRetrieved(feed)

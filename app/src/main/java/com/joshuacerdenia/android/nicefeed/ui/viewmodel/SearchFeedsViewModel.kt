@@ -2,7 +2,7 @@ package com.joshuacerdenia.android.nicefeed.ui.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Transformations
+import androidx.lifecycle.switchMap
 import com.joshuacerdenia.android.nicefeed.data.model.SearchResultItem
 import com.joshuacerdenia.android.nicefeed.data.remote.FeedSearcher
 
@@ -15,7 +15,7 @@ class SearchFeedsViewModel: FeedAddingViewModel() {
 
     val feedIdsLiveData = repo.getFeedIds()
     private val mutableQuery = MutableLiveData<String>()
-    val searchResultLiveData: LiveData<List<SearchResultItem>> = Transformations.switchMap(mutableQuery) { query ->
+    val searchResultLiveData: LiveData<List<SearchResultItem>> = mutableQuery.switchMap { query ->
         searcher.getFeedList(query)
     }
 
