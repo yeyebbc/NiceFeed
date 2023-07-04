@@ -31,17 +31,15 @@ class EntryListViewModel: ViewModel(), UpdateManager.UpdateReceiver {
         value = feedIdLiveData.map { feedId: String -> repo.getFeed(feedId) }.value.toString()
     }
 
-    private val sourceEntriesLiveData: LiveData<String> = MutableLiveData<String>().apply {
-            value = feedIdLiveData.map {
-                feedId: String -> when (feedId) {
-                    EntryListFragment.FOLDER_NEW -> repo.getNewEntries(MAX_NEW_ENTRIES)
-                    EntryListFragment.FOLDER_STARRED -> repo.getStarredEntries()
-                    else -> repo.getEntriesByFeed(feedId)
-                }
-            }.value.toString()
-
+    private val sourceEntriesLiveData: LiveData<List<Entry>> = feedIdLiveData.switchMap { feedId: String ->
+        when (feedId) {
+            EntryListFragment.FOLDER_NEW -> repo.getNewEntries(MAX_NEW_ENTRIES)
+            EntryListFragment.FOLDER_STARRED -> repo.getStarredEntries()
+            else -> repo.getEntriesByFeed(feedId)
+        }
     }
 
+//    Original code
 //    private val sourceEntriesLiveData = feedIdLiveData.switchMap(feedIdLiveData) { feedId: String ->
 //        when (feedId) {
 //            EntryListFragment.FOLDER_NEW -> repo.getNewEntries(MAX_NEW_ENTRIES)
