@@ -138,6 +138,7 @@ class EntryFragment: VisibleFragment() {
         }
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
         inflater.inflate(R.menu.fragment_entry, menu)
@@ -145,6 +146,7 @@ class EntryFragment: VisibleFragment() {
         viewModel.entry?.let { toggleStarOptionItem(it.isStarred) }
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.item_star -> handleStar()

@@ -178,11 +178,13 @@ class SettingsFragment: VisibleFragment(), AboutFragment.Callback {
         }
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
         inflater.inflate(R.menu.fragment_settings, menu)
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return if (item.itemId == R.id.about_menu_item) {
             AboutFragment.newInstance().apply {

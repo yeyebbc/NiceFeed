@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">@android:color/transparent</color>
+    <color name="colorPrimary">#FE621D</color>
+    <color name="windowBackground">#EDEDEB</color>
     <color name="colorPrimaryDark">#262626</color>
     <color name="white">#FFFF</color>
-    <color name="colorAccent">#018786</color>
+    <color name="colorAccent">#FE621D</color>
     <color name="colorSelect">#59FE621D</color>
     <color name="colorLink">#444E64</color>
     <color name="topic1">#f94144</color>

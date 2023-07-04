@@ -16,6 +16,7 @@ import com.joshuacerdenia.android.nicefeed.util.extensions.shortened
 import com.joshuacerdenia.android.nicefeed.util.extensions.sortedByDate
 import com.joshuacerdenia.android.nicefeed.util.extensions.sortedUnreadOnTop
 import kotlinx.coroutines.launch
+import java.lang.reflect.TypeVariable
 import java.util.*
 
 class EntryListViewModel: ViewModel(), UpdateManager.UpdateReceiver {
@@ -25,16 +26,29 @@ class EntryListViewModel: ViewModel(), UpdateManager.UpdateReceiver {
     private val updateManager = UpdateManager(this)
 
     private val feedIdLiveData = MutableLiveData<String>()
-    val feedLiveData = Transformations.switchMap(feedIdLiveData) { feedId ->
-        repo.getFeed(feedId)
+
+    val feedLiveData: LiveData<String> = MutableLiveData<String>().apply {
+        value = feedIdLiveData.map { feedId: String -> repo.getFeed(feedId) }.value.toString()
     }
-    private val sourceEntriesLiveData = Transformations.switchMap(feedIdLiveData) { feedId ->
-        when (feedId) {
-            EntryListFragment.FOLDER_NEW -> repo.getNewEntries(MAX_NEW_ENTRIES)
-            EntryListFragment.FOLDER_STARRED -> repo.getStarredEntries()
-            else -> repo.getEntriesByFeed(feedId)
-        }
+
+    private val sourceEntriesLiveData: LiveData<String> = MutableLiveData<String>().apply {
+            value = feedIdLiveData.map {
+                feedId: String -> when (feedId) {
+                    EntryListFragment.FOLDER_NEW -> repo.getNewEntries(MAX_NEW_ENTRIES)
+                    EntryListFragment.FOLDER_STARRED -> repo.getStarredEntries()
+                    else -> repo.getEntriesByFeed(feedId)
+                }
+            }.value.toString()
+
     }
+
+//    private val sourceEntriesLiveData = feedIdLiveData.switchMap(feedIdLiveData) { feedId: String ->
+//        when (feedId) {
+//            EntryListFragment.FOLDER_NEW -> repo.getNewEntries(MAX_NEW_ENTRIES)
+//            EntryListFragment.FOLDER_STARRED -> repo.getStarredEntries()
+//            else -> repo.getEntriesByFeed(feedId)
+//        }
+//    }
 
     private val entriesLiveData = MediatorLiveData<List<Entry>>()
     val entriesLightLiveData = MediatorLiveData<List<EntryLight>>()

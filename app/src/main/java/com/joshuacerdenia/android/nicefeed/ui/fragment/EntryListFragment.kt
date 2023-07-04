@@ -129,7 +129,7 @@ open class EntryListFragment : VisibleFragment(),
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.feedLiveData.observe(viewLifecycleOwner, { feed ->
+        viewModel.feedLiveData.observe(viewLifecycleOwner) { feed: Feed ->
             binding.progressBar.hide()
             binding.masterProgressBar.hide()
             viewModel.onFeedRetrieved(feed)
@@ -139,9 +139,9 @@ open class EntryListFragment : VisibleFragment(),
                     callbacks?.onFeedRemoved()
                 }
             }
-        })
+        }
 
-        viewModel.entriesLightLiveData.observe(viewLifecycleOwner, { entries ->
+        viewModel.entriesLightLiveData.observe(viewLifecycleOwner) { entries ->
             binding.noItemsTextView.setSimpleVisibility(entries.isNullOrEmpty())
             binding.progressBar.hide()
             adapter.submitList(entries)
@@ -153,13 +153,13 @@ open class EntryListFragment : VisibleFragment(),
                     binding.recyclerView.scrollToPosition(0)
                 }, 250)
             }
-        })
+        }
 
-        viewModel.updateResultLiveData.observe(viewLifecycleOwner, { results ->
+        viewModel.updateResultLiveData.observe(viewLifecycleOwner) { results ->
             binding.progressBar.hide()
             results?.let { viewModel.onUpdatesDownloaded(results) }
             restoreToolbar()
-        })
+        }
     }
 
     override fun onStart() {
@@ -196,6 +196,7 @@ open class EntryListFragment : VisibleFragment(),
         viewModel.keepOldUnreadEntries(FeedPreferences.shouldKeepOldUnreadEntries)
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
         inflater.inflate(R.menu.fragment_entry_list, menu)
@@ -212,14 +213,14 @@ open class EntryListFragment : VisibleFragment(),
 
         if (feedId == FOLDER_STARRED) menu.findItem(R.id.update_item).isVisible = false
 
-        searchItem.setOnActionExpandListener(object: MenuItem.OnActionExpandListener {
-            override fun onMenuItemActionExpand(item: MenuItem?): Boolean = true
-
-            override fun onMenuItemActionCollapse(item: MenuItem?): Boolean {
-                viewModel.clearQuery()
-                return true
-            }
-        })
+//        searchItem.setOnActionExpandListener(object: MenuItem.OnActionExpandListener {
+//            override fun onMenuItemActionExpand(item: MenuItem?): Boolean = true
+//
+//            override fun onMenuItemActionCollapse(item: MenuItem?): Boolean {
+//                viewModel.clearQuery()
+//                return true
+//            }
+//        })
 
         (searchItem.actionView as SearchView).apply {
             if (viewModel.query.isNotEmpty()) {
@@ -240,6 +241,7 @@ open class EntryListFragment : VisibleFragment(),
         }
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.update_item -> handleCheckForUpdates()

@@ -86,6 +86,7 @@ class EntryListAdapter(
             infoTextView.text = "$date – ${entry.website.shortened()}"
             if (entry.isStarred) starView.show() else starView.hide()
 
+//            Load head image into list entry card.
             Picasso.get().load(entry.image).fit().centerCrop()
                 .placeholder(R.drawable.vintage_newspaper).into(imageView)
         }

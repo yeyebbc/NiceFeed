@@ -103,15 +103,15 @@ class ManageFeedsFragment: VisibleFragment(),
         progressBar.show()
         setupSpeedDial()
 
-        viewModel.feedsManageableLiveData.observe(viewLifecycleOwner, { feeds ->
+        viewModel.feedsManageableLiveData.observe(viewLifecycleOwner) { feeds ->
             progressBar.hide()
             adapter.submitList(feeds)
             selectAllCheckBox.isChecked = feeds.size == viewModel.selectedItems.size
             if (feeds.size > 1) selectAllCheckBox.show() else selectAllCheckBox.hide()
             if (feeds.isEmpty()) emptyMessageTextView.show() else emptyMessageTextView.hide()
-        })
+        }
 
-        viewModel.anyIsSelected.observe(viewLifecycleOwner, { anyIsSelected ->
+        viewModel.anyIsSelected.observe(viewLifecycleOwner) { anyIsSelected ->
             updateCounter()
             if (anyIsSelected) {
                 speedDial.show()
@@ -119,7 +119,7 @@ class ManageFeedsFragment: VisibleFragment(),
             } else {
                 speedDial.hide()
             }
-        })
+        }
     }
 
     override fun onStart() {
@@ -131,20 +131,21 @@ class ManageFeedsFragment: VisibleFragment(),
         }
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
         inflater.inflate(R.menu.fragment_manage_feeds, menu)
         searchItem = menu.findItem(R.id.menu_item_search)
 
-        searchItem.setOnActionExpandListener(object: MenuItem.OnActionExpandListener {
-            override fun onMenuItemActionExpand(item: MenuItem?): Boolean = true
-
-            override fun onMenuItemActionCollapse(item: MenuItem?): Boolean {
-                viewModel.clearQuery()
-                resetSelection()
-                return true
-            }
-        })
+//        searchItem.setOnActionExpandListener(object: MenuItem.OnActionExpandListener {
+//            override fun onMenuItemActionExpand(item: MenuItem?): Boolean = true
+//
+//            override fun onMenuItemActionCollapse(item: MenuItem?): Boolean {
+//                viewModel.clearQuery()
+//                resetSelection()
+//                return true
+//            }
+//        })
 
         (searchItem.actionView as SearchView).apply {
             if (viewModel.query.isNotEmpty()) {
@@ -165,6 +166,7 @@ class ManageFeedsFragment: VisibleFragment(),
         }
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.menu_item_sort -> handleSortFeeds()

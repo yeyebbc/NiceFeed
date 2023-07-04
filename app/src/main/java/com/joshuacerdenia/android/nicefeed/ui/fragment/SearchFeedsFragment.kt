@@ -92,6 +92,7 @@ class SearchFeedsFragment : FeedAddingFragment(),
         })
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.fragment_feed_search, menu)
         val initialQuery = arguments?.getString(ARG_INITIAL_QUERY) ?: ""
